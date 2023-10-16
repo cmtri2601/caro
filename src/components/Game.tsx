@@ -51,23 +51,23 @@ const Game = () => {
     // get latest state of board
     const latestBoard = history.slice(0, stepNumber + 1);
     // get previous step
-    const current = latestBoard[stepNumber];
-    const squares = current?.squares?.slice();
-    // TODO: ???
-    current?.squares?.map((row, idx) => {
+    const previousBoard = latestBoard[stepNumber];
+    // create new board
+    const squares = previousBoard?.squares?.slice();
+    // copy previous board to new board
+    previousBoard?.squares?.map((row, idx) => {
       if (squares?.[idx]) {
-        squares[idx] = current?.squares?.[idx].slice();
+        squares[idx] = row.slice();
       }
       return true;
     });
-    // TODO: ???
-    if (calculateWinner(squares) || squares?.[i]?.[j]) {
+    // set state of current step
+    if (!calculateWinner(squares) && !squares?.[i]?.[j]) {
+      squares[i][j] = xIsNext ? 'X' : 'O';
+    } else {
       return;
     }
-    if (squares?.[i]?.[j]) {
-      squares[i][j] = xIsNext ? 'X' : 'O';
-    }
-
+    // set state
     setHistory(pre => pre.concat({ squares: squares, location: { x: i, y: j } }));
     setStepNumber(pre => ++pre);
     setXIsNext(pre => !pre);
@@ -75,6 +75,12 @@ const Game = () => {
 
   const sort = () => {
     setIsDescending(state => !state);
+  };
+
+  const playAgain = () => {
+    setHistory([{ squares: genEmptyBoard(width, height), location: null }]);
+    setStepNumber(0);
+    setXIsNext(true);
   };
 
   const handleChangeWidth = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -149,6 +155,8 @@ const Game = () => {
           value={inputHeight}
           onChange={handleChangeHeight}
         />
+        <br />
+        <button onClick={playAgain}>Chơi lại!</button>
       </div>
       <div className="game">
         <div className="game-board">
