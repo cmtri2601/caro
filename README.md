@@ -27,3 +27,6 @@ If you are developing a production application, we recommend updating the config
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 
 - Link ref: https://github.com/vukhoa30/1412257-react-caro/blob/master/src/index.js
+- Find out: 
+ + git branch -M main
+ + git push -u origin main
